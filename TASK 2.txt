@@ -1,0 +1,100 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+class Student {
+    String name;
+    int rollNumber;
+    String course;
+    Date dob; 
+    String fatherName; 
+    String bloodGroup; 
+
+
+    public Student(String name, int rollNumber, String course, Date dob, String fatherName, String bloodGroup) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.course = course;
+        this.dob = dob;
+        this.fatherName = fatherName;
+        this.bloodGroup = bloodGroup;
+    }
+}
+
+class StudentInformationSystem {
+    ArrayList<Student> studentList;
+
+
+    public StudentInformationSystem() {
+        studentList = new ArrayList<>();
+    }
+
+    
+    public void addStudent() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter student name: ");
+        String name = scanner.next();
+        System.out.print("Enter roll number: ");
+        int rollNumber = scanner.nextInt();
+        System.out.print("Enter course: ");
+        String course = scanner.next();
+        System.out.print("Enter date of birth (yyyy-MM-dd): ");
+        String dobString = scanner.next();
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dobString);
+            System.out.print("Enter Father's/Guardian's name: ");
+            String fatherName = scanner.next();
+            System.out.print("Enter blood group: ");
+            String bloodGroup = scanner.next();
+            Student student = new Student(name, rollNumber, course, dob, fatherName, bloodGroup);
+            studentList.add(student);
+            System.out.println("Student added successfully!");
+        } catch (Exception e) {
+            System.out.println("Invalid date format. Please enter the date in the format yyyy-MM-dd.");
+        }
+    }
+
+    
+    public void displayAllStudents() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("List of Students:");
+        for (Student student : studentList) {
+            System.out.println("Name: " + student.name + "\nRoll Number: " + student.rollNumber +
+                    "\nCourse: " + student.course + "\nDate of Birth: " + sdf.format(student.dob) +
+                    "\nFather's/Guardian's Name: " + student.fatherName +
+                    "\nBlood Group: " + student.bloodGroup);
+        }
+    }
+
+   
+    public static void main(String[] args) {
+        StudentInformationSystem sis = new StudentInformationSystem();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nStudent Information System Menu:");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display All Students");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    sis.addStudent();
+                    break;
+                case 2:
+                    sis.displayAllStudents();
+                    break;
+                case 3:
+                    System.out.println("Exiting the program. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}
